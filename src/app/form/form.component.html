@@ -1,0 +1,35 @@
+<div class="dropdown-wrapper">	
+    <div class="drop-down-form-wrapper">
+    <div class="form-heading">Form To Update A Address</div>
+      <div class="dropdown-sub-wrapper">
+          <label class="dropdown-label">Please Enter the Country Name</label>
+          <select placeholder="Country" [(ngModel)]="selectedCountry" (change)="changeCountry($event)" class="select-input-style">
+              <option>Select Country Name</option>
+              <option *ngFor="let country of Countries">{{country.name}}</option>
+          </select>
+      </div>
+  
+      <div class="dropdown-sub-wrapper" *ngIf="isCountry">
+          <label class="dropdown-label">Please Enter the States Name</label>
+          <select placeholder="State" (change)="changeState($event)" class="select-input-style">
+              <option>Select States Name</option>
+              <option *ngFor="let state of states">{{state.name}}</option>
+          </select>
+      </div>
+      
+      <div class="dropdown-sub-wrapper" *ngIf="isState">
+          <label class="dropdown-label">Please Enter the District Name</label>
+          <select placeholder="City" class="select-input-style" (change)="changeCity($event)">
+              <option>Select District Name</option>
+              <option *ngFor="let city of cities">{{city.name}}</option>
+          </select>
+      </div>
+      <div class="dropdown-sub-wrapper" *ngIf="isCity">
+        <label class="dropdown-label">Please Enter the Place Name</label>
+        <select placeholder="City" class="select-input-style">
+            <option>Select Place Name</option>
+            <option *ngFor="let place of places">{{place}}</option>
+        </select>
+    </div>
+  </div>
+  </div>

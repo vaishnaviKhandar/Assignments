@@ -1,0 +1,18 @@
+.btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 228px;
+}
+button.btn-style {
+    /* margin-top: 34px; */
+    margin-top: 10px;
+    width: 15vw;
+    border-radius: 8px;
+    height: 13vh;
+    background: #81b581;
+    border: none;
+    font-size: 17px;
+    font-family: Open sans-serif;
+}
