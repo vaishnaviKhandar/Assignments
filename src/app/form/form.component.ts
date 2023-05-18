@@ -1,39 +1,49 @@
 import { Component } from '@angular/core';
+import { FormDataService } from '../form-data.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
+  constructor(public formDataService:FormDataService){}
   isCountry: boolean = false;
-  isState: boolean = false
-  isCity:boolean=false
+  isState: boolean = false;
+  isCity: boolean = false;
 
-  selectedCountry: String = "Select Country Name";
-  selectedState:String ="";
-  Countries: Array<any> = [
-    { name: 'India', states: [{ name: 'Maharashtra', cities: [{name:'Nashik',places:['Manmad','Ozar']},{name:'Jalgoan',places:['Dharangaon','Amalner']}] }, { name: 'Tamilnadu', cities: [{name:'Chennai',places:['Mahabalipuram','Kapaleeshwar Temple']},{name:'salem',places:['Shiva Temple','Siddhar Temple']}] }]},
-    { name: 'Germany', states: [{ name: 'Bavaria', cities: [{name:'Ingolstadt',places:['Audi Museum','Audi Forum & Headquarters ']},{name: 'Regensburg',places:['Old Town',' Old Stone Bridge']}] }, { name: 'Hessen', cities: [{name:'Kassel',places:['Malana Village','Kheer Ganga']},{name: 'Fulda',places:['The Roman Forum','Main']}] }] },
-  ];
+  selectedCountry: String = 'Select Country Name';
+  selectedState: String = '';
+  country:any = [];
   states: Array<any> = [];
   cities: Array<any> = [];
-  places:Array<any>= [];
+  places: Array<any> = [];
+  Countries:any
+ngOnInit(){
+  this.formDataService.data.subscribe(data=>{
+    this.Countries=data  
+    let temp = JSON.parse(this.Countries)?.countries
+    this.country = Object.values(temp);  
+  })  
+}
 
   changeCountry(country: any) {
     this.isCountry = true;
-    this.states = this.Countries.find((cntry: any) => cntry.name == country.target.value).states;
+    let temp1=this.country.find(
+      (cntry: any) => cntry.countryName == country.target.value
+    ).states
+    this.states = Object.values(temp1)    
   }
 
-  changeState(state: any) {
-    this.isState = true
-    this.selectedState = state.target.value
-    this.cities = this.Countries.find((cntry: any) =>cntry.name == this.selectedCountry).states.find((stat: any) => stat.name == state.target.value).cities;
+  changeState(state1: any) {
+    this.isState = true;
+    this.selectedState = state1.target.value;
+    let temp2=this.states.find((abc:any)=>abc.stateName==this.selectedState).districts
+    this.cities=Object.values(temp2)    
   }
   changeCity(city: any) {
-    this.isCity = true
-    this.places = this.Countries.find((cntry: any) => cntry.name == this.selectedCountry).states.find((stat: any) => stat.name == this.selectedState).cities.find((place: any) => place.name == city.target.value).places
+    this.isCity = true;
+    let temp3=this.cities.find((pqr:any)=>pqr.districtName==city.target.value).places
+    this.places=Object.values(temp3)
   }
-
-
 }
